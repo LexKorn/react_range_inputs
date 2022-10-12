@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import './rangeOneValue.sass';
 
 const RangeOneValue = () => {
-    const minValue = 1;
+    const minValue = 10;
     const maxValue = 60;
     const [maxPrice, setMaxPrice] = useState(13);
     const [maxRange, setMaxRange] = useState(13);
@@ -11,15 +11,17 @@ const RangeOneValue = () => {
     
     const handlerMaxPrice = () => {
         setMaxRange(maxPrice);
-        setRight(100 - (maxPrice / maxValue) * 100);
+        setRight(100 - ((maxPrice - minValue) * 100 )/ (maxValue - minValue));
     };
 
     const handlerMaxRange = () => {
         setMaxPrice(maxRange);
-        setRight(100 - (maxRange / maxValue) * 100);
+        setRight(100 - ((maxRange - minValue) * 100 )/ (maxValue - minValue));
     };
 
     useEffect(() => {
+        if (maxPrice > maxValue) {
+        }
         handlerMaxPrice();
     }, [maxPrice]);
 
@@ -37,7 +39,16 @@ const RangeOneValue = () => {
             <div className="price-input">
                 <div className="field">
                     <span>Value</span>
-                    <input type="number" className="input-max" value={maxPrice} onChange={e => setMaxPrice(e.target.value)} />
+                    <input 
+                        type="number" 
+                        className="input-max" 
+                        value={maxPrice} 
+                        onChange={e => {
+                            (e.target.value > minValue) ? 
+                                (e.target.value > maxValue) ? setMaxPrice(maxValue) : setMaxPrice(e.target.value)
+                            : setMaxPrice(minValue)
+                        }} 
+                    />
                 </div>
             </div>
             <div className="slider">
