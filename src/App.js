@@ -8,7 +8,12 @@ function App() {
     <div>
       <Range />
       <br/>
-      <RangeOneValue />
+      <RangeOneValue 
+        minValue={10} 
+        maxValue={60} 
+        step={1} 
+        init={13} 
+      />
     </div>
   );
 }
